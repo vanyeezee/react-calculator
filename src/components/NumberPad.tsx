@@ -1,43 +1,50 @@
-import React from 'react';
+import React from "react";
+import Button from "./Button";
+import ClearButton from "./ClearButton";
+import "../styles.css"
+import OperatorButton from "./OperatorButton";
 
 interface NumberPadProps {
   handleNumberClick: (number: string) => void;
-    handleDecimalClick: () => void;
-    handleClearClick: () => void;
-}
+  handleDecimalClick: () => void;
+    onOperatorClick: (operator: string) => void;
+    onEqualClick: () => void;
+};
 
-const NumberPad = ({ handleNumberClick, handleDecimalClick, handleClearClick }: NumberPadProps) => {
-  const handleButtonClick = (value: string) => {
-    if (value === '.') {
-      handleDecimalClick();
-    } else {
-        handleNumberClick(value);
-    }
-  };
+const NumberPad: React.FC<NumberPadProps> = ({
+  handleNumberClick,
+  handleDecimalClick,
+    onOperatorClick,
+    onEqualClick
+}) => {
 
   return (
     <div className="number-pad">
-      <div className="row">
-        <button onClick={() => handleButtonClick('7')}>7</button>
-        <button onClick={() => handleButtonClick('8')}>8</button>
-        <button onClick={() => handleButtonClick('9')}>9</button>
-      </div>
-      <div className="row">
-        <button onClick={() => handleButtonClick('4')}>4</button>
-        <button onClick={() => handleButtonClick('5')}>5</button>
-        <button onClick={() => handleButtonClick('6')}>6</button>
-      </div>
-      <div className="row">
-        <button onClick={() => handleButtonClick('1')}>1</button>
-        <button onClick={() => handleButtonClick('2')}>2</button>
-        <button onClick={() => handleButtonClick('3')}>3</button>
-      </div>
-      <div className="row">
-        <button onClick={() => handleButtonClick('0')}>0</button>
-        <button onClick={() => handleButtonClick('.')}>.</button>
-        <button className="number-button" onClick={() => handleClearClick()}>C</button>
-      </div>
+      <div>
+      <Button label="7" onClick={() => handleNumberClick("7")} />
+      <Button label="8" onClick={() => handleNumberClick("8")} />
+      <Button label="9" onClick={() => handleNumberClick("9")} />
+      <OperatorButton operator="+" onClick={onOperatorClick} />
     </div>
+    <div>
+      <Button label="4" onClick={() => handleNumberClick("4")} />
+      <Button label="5" onClick={() => handleNumberClick("5")} />
+      <Button label="6" onClick={() => handleNumberClick("6")} />
+      <OperatorButton operator="-" onClick={onOperatorClick} />
+    </div>
+    <div>
+      <Button label="1" onClick={() => handleNumberClick("1")} />
+      <Button label="2" onClick={() => handleNumberClick("2")} />
+      <Button label="3" onClick={() => handleNumberClick("3")} />
+      <OperatorButton operator="*" onClick={onOperatorClick} />
+    </div>
+    <div>
+      <Button label="0" onClick={() => handleNumberClick("0")} />
+      <Button label="." onClick={handleDecimalClick} />
+      <OperatorButton operator="/" onClick={onOperatorClick} />
+      <OperatorButton operator="=" onClick={onEqualClick} />
+          </div>
+  </div>
   );
 };
 
