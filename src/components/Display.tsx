@@ -7,7 +7,6 @@ interface DisplayProps {
 
 const Display: React.FC<DisplayProps> = ({ value, onChange }) => {
     return <div className="display">{value}</div>;
-    // <input className="display" type="text" value={value} onChange={onChange} />;
 };
 
 export default Display;

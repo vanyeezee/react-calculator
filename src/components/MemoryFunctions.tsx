@@ -11,10 +11,10 @@ interface MemoryFunctionsProps {
 const MemoryFunctions: React.FC<MemoryFunctionsProps> = ({ onMemoryAdd, onMemorySubtract, onMemoryClear, onMemoryRecall }) => {
     return (
         <div className="row">
-            <Button label="M+" onClick={() => onMemoryAdd} />
-            <Button label="M-" onClick={() => onMemorySubtract} />
-            <Button label="MR" onClick={() => onMemoryRecall} />
-            <Button label="MC" onClick={() => onMemoryClear} />
+            <Button label="M+" onClick={() => onMemoryAdd()} />
+            <Button label="M-" onClick={() => onMemorySubtract()} />
+            <Button label="MR" onClick={() => onMemoryRecall()} />
+            <Button label="MC" onClick={() => onMemoryClear()} />
         </div>
     );
 }

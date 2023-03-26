@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { memo, useRef, useState } from "react";
 import NumberPad from "./components/NumberPad";
 import Display from "./components/Display";
 import "./styles.css"
@@ -13,11 +13,11 @@ function App() {
   const [storedValue, setStoredValue] = useState("");
   const [operator, setOperator] = useState("");
   const history = useRef<string[]>([]);
-  const [renderHistoryModal, setRenderHistoryModal] = useState(false);
-
+  const [renderHistoryModal, setRenderHistoryModal] = useState<boolean>(false);
+  const [memory, setMemory] = useState<number>(0);
 
   const handleNumberClick = (number: string) => {
-    if (displayValue === "0") {
+    if (displayValue === "0" || operator) {
       setDisplayValue(number);
     } else {
       setDisplayValue((prev) => prev + number);
@@ -30,13 +30,41 @@ function App() {
     }
   };
 
-  const handleOperatorClick = (operator: string) => {
-    setStoredValue(displayValue);
-    setOperator(operator);
-    setDisplayValue("0");
+  const handleOperatorClick = (currOperator: string) => {
+    if (!operator) {
+      setOperator(currOperator);
+      setStoredValue(displayValue);
+      setDisplayValue("0");
+    } else {
+      console.log(storedValue + "::" + operator + "::" + displayValue + "::" + currOperator);
+      if (storedValue) {
+        setDisplayValue(evaluateExpression().toString());
+      }
+      setOperator(currOperator);
+      setStoredValue(displayValue);
+      console.log("new: " + storedValue + "::" + operator + "::" + displayValue + "::" + currOperator);
+    }
+
+  
+
+    
   };
 
   const handleEqualClick = () => {
+    let result = evaluateExpression()
+    setDisplayValue(result.toString());
+    setStoredValue("");
+    setOperator("");
+    addToHistory(`${storedValue} ${operator} ${displayValue} = ${result}`);
+  };
+
+  const handleClearClick = () => {
+    setDisplayValue("0");
+    setStoredValue("");
+    setOperator("");
+  };
+
+  function evaluateExpression(): number {
     const currentValue = parseFloat(displayValue);
     const storedValueParsed = parseFloat(storedValue);
     let result = 0;
@@ -64,17 +92,9 @@ function App() {
         break;
     }
 
-    setDisplayValue(result.toString());
-    setStoredValue("");
-    setOperator("");
-    addToHistory(`${storedValue} ${operator} ${displayValue} = ${result}`);
-  };
-
-  const handleClearClick = () => {
-    setDisplayValue("0");
-    setStoredValue("");
-    setOperator("");
-  };
+    return result;
+  }
+  
 
   function addToHistory(historyItem: string) {
     history.current.push(historyItem);
@@ -114,17 +134,19 @@ function App() {
         <div className="number-pad-container">
         <MemoryFunctions
             onMemoryAdd={function (): void {
-            throw new Error("Function not implemented.");
+              console.log(displayValue);
+              setMemory(prev => prev + parseFloat(displayValue));
             }}
             onMemorySubtract={function (): void {
-            throw new Error("Function not implemented.");
+              setMemory(prev => prev - parseFloat(displayValue));
+              console.log(memory);
             }}
             onMemoryClear={function (): void {
-            throw new Error("Function not implemented.");
+              setMemory(0);
             }}
             onMemoryRecall={function (): void {
-            throw new Error("Function not implemented.");
-          }}
+              setDisplayValue(memory.toString());
+            }}
           />
           <AdvancedFunctions calcPercentage={evaluatePecentage}
             onOperatorClick={handleOperatorClick} />
@@ -146,5 +168,3 @@ function App() {
 }
 
 export default App;
-
-
