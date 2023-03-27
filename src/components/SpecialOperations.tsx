@@ -1,19 +1,20 @@
 import React from "react";
-import ClearButton from "./ClearButton";
+import {AllClearButton, ClearButton} from "./ClearButton";
 
 interface SpecialOperationsProps {
+  handleAllClearClick: () => void;
   handleClearClick: () => void;
-
 }
 
 const SpecialOperations: React.FC<SpecialOperationsProps> = ({
-  handleClearClick
+  handleAllClearClick: handleAllClearClick,
+  handleClearClick: handleClearClick
 }) => {
   return (
     <div className="row">
+      <AllClearButton onClick={handleAllClearClick} />
       <ClearButton onClick={handleClearClick} />
-      <ClearButton onClick={handleClearClick} />
-      <ClearButton onClick={handleClearClick} />
+      <AllClearButton onClick={handleAllClearClick} />
       <ClearButton onClick={handleClearClick} />
     </div>
   );

@@ -1,48 +1,56 @@
 import React from "react";
-import Button from "./Button";
-import ClearButton from "./ClearButton";
+import {Button} from "./Button";
 import "../styles.css"
 import OperatorButton from "./OperatorButton";
+import { AllClearButton, ClearButton } from "./ClearButton";
 
 interface NumberPadProps {
   handleNumberClick: (number: string) => void;
   handleDecimalClick: () => void;
     onOperatorClick: (operator: string) => void;
-    onEqualClick: () => void;
+  onEqualClick: () => void;
+  onNumPadClick(numPadButton: string): void;
+  handleAllClearClick: () => void;
+  handleClearClick: () => void;
 };
 
 const NumberPad: React.FC<NumberPadProps> = ({
-  handleNumberClick,
-  handleDecimalClick,
-    onOperatorClick,
-    onEqualClick
+  onNumPadClick,
+  onEqualClick,
+  handleAllClearClick,
+  handleClearClick
 }) => {
 
   return (
     <div className="number-pad">
       <div>
-      <Button label="7" onClick={() => handleNumberClick("7")} />
-      <Button label="8" onClick={() => handleNumberClick("8")} />
-      <Button label="9" onClick={() => handleNumberClick("9")} />
-      <OperatorButton operator="+" onClick={onOperatorClick} />
+      <Button label="7" onClick={() => onNumPadClick("7")} />
+      <Button label="8" onClick={() => onNumPadClick("8")} />
+      <Button label="9" onClick={() => onNumPadClick("9")} />
+        <Button label="(" onClick={() => onNumPadClick("(")} />
+        <AllClearButton onClick={handleAllClearClick} />
     </div>
     <div>
-      <Button label="4" onClick={() => handleNumberClick("4")} />
-      <Button label="5" onClick={() => handleNumberClick("5")} />
-      <Button label="6" onClick={() => handleNumberClick("6")} />
-      <OperatorButton operator="-" onClick={onOperatorClick} />
+      <Button label="4" onClick={() => onNumPadClick("4")} />
+      <Button label="5" onClick={() => onNumPadClick("5")} />
+        <Button label="6" onClick={() => onNumPadClick("6")} />
+        <Button label="0" onClick={() => onNumPadClick("0")} />
+        <ClearButton onClick={handleClearClick} />
+
+
     </div>
     <div>
-      <Button label="1" onClick={() => handleNumberClick("1")} />
-      <Button label="2" onClick={() => handleNumberClick("2")} />
-      <Button label="3" onClick={() => handleNumberClick("3")} />
-      <OperatorButton operator="*" onClick={onOperatorClick} />
+      <Button label="1" onClick={() => onNumPadClick("1")} />
+      <Button label="2" onClick={() => onNumPadClick("2")} />
+      <Button label="3" onClick={() => onNumPadClick("3")} />
+      <Button label=")" onClick={() => onNumPadClick(")")} />
     </div>
     <div>
-      <Button label="0" onClick={() => handleNumberClick("0")} />
-      <Button label="." onClick={handleDecimalClick} />
-      <OperatorButton operator="/" onClick={onOperatorClick} />
-      <OperatorButton operator="=" onClick={onEqualClick} />
+    <OperatorButton operator="+" onOperatorClick={() => onNumPadClick("+")} />
+    <OperatorButton operator="-" onOperatorClick={() => onNumPadClick("-")} />
+      <OperatorButton operator="." onOperatorClick={() => onNumPadClick(".")} />
+      <OperatorButton operator="/" onOperatorClick={() => onNumPadClick("/")} />
+      <OperatorButton operator="=" onOperatorClick={() => onEqualClick()} />
           </div>
   </div>
   );

@@ -4,7 +4,7 @@ type ClearButtonProps = {
   onClick: () => void;
 };
 
-const ClearButton: React.FC<ClearButtonProps> = ({ onClick }) => {
+export const AllClearButton: React.FC<ClearButtonProps> = ({ onClick }) => {
   return (
     <button className="clear-button" onClick={onClick}>
       AC
@@ -12,4 +12,10 @@ const ClearButton: React.FC<ClearButtonProps> = ({ onClick }) => {
   );
 };
 
-export default ClearButton;
+export const ClearButton: React.FC<ClearButtonProps> = ({ onClick }) => {
+  return (
+    <button className="clear-button" onClick={onClick}>
+      C
+    </button>
+  );
+};

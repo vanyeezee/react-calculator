@@ -1,0 +1,84 @@
+{
+  "api": {
+    "reactcalculator": {
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [],
+          "defaultAuthentication": {
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7
+            },
+            "authenticationType": "API_KEY"
+          }
+        }
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync"
+    }
+  },
+  "auth": {
+    "reactcalculatore22f7b8d": {
+      "customAuth": false,
+      "dependsOn": [],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OPTIONAL",
+        "mfaTypes": [
+          "SMS",
+          "TOTP"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyCharacters": [],
+          "passwordPolicyMinLength": 8
+        },
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "socialProviders": [
+          "GOOGLE",
+          "AMAZON"
+        ],
+        "usernameAttributes": [],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito"
+    },
+    "userPoolGroups": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId",
+            "AppClientIDWeb",
+            "AppClientID",
+            "IdentityPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "reactcalculatore22f7b8d"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito-UserPool-Groups"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_auth_reactcalculatore22f7b8d_amazonAppId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "reactcalculatore22f7b8d"
+        }
+      ]
+    },
+    "AMPLIFY_auth_reactcalculatore22f7b8d_googleClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "reactcalculatore22f7b8d"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-reactcalculator-dev-123032-authRole",
+      "UnauthRoleArn": "arn:aws:iam::538627409419:role/amplify-reactcalculator-dev-123032-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::538627409419:role/amplify-reactcalculator-dev-123032-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-reactcalculator-dev-123032-deployment",
+      "UnauthRoleName": "amplify-reactcalculator-dev-123032-unauthRole",
+      "StackName": "amplify-reactcalculator-dev-123032",
+      "StackId": "arn:aws:cloudformation:us-west-2:538627409419:stack/amplify-reactcalculator-dev-123032/ae5d5720-cc0c-11ed-ad7c-0626b06177f1",
+      "AmplifyAppId": "d24sr9e1xdl2rt"
+    },
+    "categories": {
+      "auth": {
+        "reactcalculatore22f7b8d": {
+          "googleClientId": "183072856247-qhcj20u4f4r4022d7uothrom1g3o8n5h.apps.googleusercontent.com",
+          "amazonAppId": "amzn1.application-oa2-client.52cef1d7c0964f86a5d45919abe92863"
+        },
+        "userPoolGroups": {}
+      },
+      "api": {
+        "reactcalculator": {}
+      }
+    }
+  }
+}

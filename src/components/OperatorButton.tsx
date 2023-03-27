@@ -3,19 +3,16 @@ import "../styles.css"
 
 interface OperatorButtonProps {
   operator: string;
-  onClick: (operator: string) => void;
+  onOperatorClick: (operator: string) => void;
 }
 
 const OperatorButton: React.FC<OperatorButtonProps> = ({
   operator,
-  onClick,
+  onOperatorClick: onClick,
 }) => {
-  const handleClick = () => {
-    onClick(operator);
-  };
 
   return (
-    <button onClick={handleClick} className="button">
+    <button onClick={() => onClick(operator)} className="button">
       {operator}
     </button>
   );

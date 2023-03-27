@@ -1,12 +1,12 @@
 import React from "react";
 import "../styles.css";
 
-type ButtonProps = {
+export interface ButtonProps {
   label: string;
-  onClick: () => void;
+  onClick(): void;
 };
 
-const Button: React.FC<ButtonProps> = ({ label, onClick }) => {
+export const Button: React.FC<ButtonProps> = ({ label, onClick: onClick }) => {
   return (
     <button className="button" onClick={onClick}>
       {label}
@@ -14,4 +14,4 @@ const Button: React.FC<ButtonProps> = ({ label, onClick }) => {
   );
 };
 
-export default Button;
+

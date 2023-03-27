@@ -1,5 +1,5 @@
 import React from "react"
-import Button from "./Button";
+import {Button} from "./Button";
 import OperatorButton from "./OperatorButton";
 
 interface AdvancedFunctionsProps {
@@ -11,8 +11,8 @@ const AdvancedFunctions: React.FC<AdvancedFunctionsProps> = ({ calcPercentage, o
     return (
         <div className="row">
             <Button label="%" onClick={() => calcPercentage()} />
-            <OperatorButton operator="v" onClick={onOperatorClick} />
-            <OperatorButton operator="^" onClick={onOperatorClick} />
+            <OperatorButton operator="v" onOperatorClick={onOperatorClick} />
+            <OperatorButton operator="^" onOperatorClick={onOperatorClick} />
         </div>
     );
 }
