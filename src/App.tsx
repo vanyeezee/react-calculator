@@ -14,6 +14,7 @@ import { createCalculationHistory } from "./graphql/mutations";
 import { listCalculationHistories } from "./graphql/queries";
 import { WithAuthenticatorProps, withAuthenticator } from "@aws-amplify/ui-react";
 import awsmobile from "./aws-exports";
+import NavMenu from "./components/NavMenu";
 Amplify.configure(awsmobile);
 
 
@@ -24,7 +25,7 @@ function App() {
   const [memory, setMemory] = useState<number>(0);
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
+
 
   useEffect(() => {
     async function checkUser() {
@@ -246,9 +247,7 @@ function App() {
 
   return (
     <div style={{backgroundColor:"orange"}}>
-      <div>
-        <h1>React Calculator</h1>
-      </div>
+      <NavMenu />
       <Button label="History" onClick={handleHistoryButton} />
       {renderHistoryModal && (
         <div className="modal">
