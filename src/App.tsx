@@ -1,20 +1,18 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import NumberPad from "./components/NumberPad";
 import Display from "./components/Display";
 import "./styles.css"
 import '@aws-amplify/ui-react/styles.css';
-import SpecialOperations from "./components/SpecialOperations";
 import MemoryFunctions from "./components/MemoryFunctions";
 import AdvancedFunctions from "./components/AdvancedFunctions";
 import {Button} from "./components/Button";
 import History from "./components/History";
-import { CalculationHistory } from "./models";
 import { Amplify, API, graphqlOperation, Auth } from "aws-amplify";
 import { createCalculationHistory } from "./graphql/mutations";
 import { listCalculationHistories } from "./graphql/queries";
-import { WithAuthenticatorProps, withAuthenticator } from "@aws-amplify/ui-react";
 import awsmobile from "./aws-exports";
 import NavMenu from "./components/NavMenu";
+import { CalculationHistory, ListCalculationHistoriesQuery } from "./API";
 Amplify.configure(awsmobile);
 
 
@@ -23,22 +21,38 @@ function App() {
   const history = useRef<string[]>([]);
   const [renderHistoryModal, setRenderHistoryModal] = useState<boolean>(false);
   const [memory, setMemory] = useState<number>(0);
-  const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [result, setResult] = useState<string>("")
+  const [expression, setExpression] = useState<string>("");
 
 
-  useEffect(() => {
-    async function checkUser() {
-      try {
-        const currentUser = await Auth.currentAuthenticatedUser();
-        setUser(currentUser);
-      } catch (err) {
-        setUser(null);
-      }
+  const addCalculationHistory = async () => {
+    try {
+      // Check if the user is authenticated
+      const user = await Auth.currentUserInfo();
+  
+      const userId = user.attributes.sub;
+
+      
+      // Create a new CalculationHistory item
+      const createdAt = new Date().toISOString();
+      const newHistory = {
+        userId,
+        expression,
+        result,
+        createdAt,
+      };
+      console.log("INPUT OBJ: ", newHistory);
+      
+
+      // Save the new item to the database
+      await API.graphql(graphqlOperation(createCalculationHistory, { input: newHistory }));
+
+      console.log("Successfully added CalculationHistory item!");
+    } catch (error) {
+      console.error("Error adding CalculationHistory item:", error);
     }
-    checkUser();
-  }, []);
-
+  };
+  
   const handleNumPadClick = (numPadButton: string) => {
     if (displayValue === "0") {
       console.log("first input")
@@ -53,9 +67,13 @@ function App() {
   };
 
   const handleEqualClick = () => {
+    if (displayValue === "0") return;
     let result = evaluateExpression(displayValue);
-    addToHistory(displayValue);
+    setResult(result.toString());
+    setExpression(displayValue);
+    addToHistory();
     setDisplayValue(result.toString());
+    addCalculationHistory();
   };
 
   const handleAllClearClick = () => {
@@ -72,8 +90,8 @@ function App() {
   
     // Evaluate expressions inside parentheses first
     let stack: (number | string)[] = [];
-    for (let i = 0; i < tokens.length; i++) {
-      const token = tokens[i];
+    for (const element of tokens) {
+      const token = element;
       if (token === "(") {
         stack.push(token);
       } else if (token === ")") {
@@ -163,27 +181,40 @@ function App() {
     return result;
   }
   
-
-  function addToHistory(historyItem: string) {
-    history.current.push(historyItem);
+  function addToHistory() {
+    history.current.push(expression);
+    console.log(history.current.toString());
   }
+
+  async function updateHistory() {
+    console.log("fetching history")
+    try {
+      // Check if the user is authenticated
+      const user = await Auth.currentUserInfo();
+  
+      const userId = user.attributes.sub;
+  
+      const cloudHistoryData: any = await API.graphql<ListCalculationHistoriesQuery>(graphqlOperation(listCalculationHistories, { filter: { userId: { eq: userId } } }));
+      const cloudHistory = cloudHistoryData.data?.listCalculationHistories.items;
+      console.log("fetched: ", cloudHistory);
+      history.current = history.current.concat(cloudHistory.map((item: CalculationHistory) => item.expression));
+    } catch (e) {
+      console.log("Error: ", e);
+    }
+  }
+  
 
   function handleHistoryButton(): void {
-    updateHistory();
+    if (renderHistoryModal) {
+      updateHistory();
+    }
     setRenderHistoryModal(!renderHistoryModal);
-  }
-
-  function updateHistory() {
-    if (!user) return
-    //TODO: If user is logged in, append history from S3 to local history, sort based on createdAt property
-
   }
 
   function handleDisplayInput(): void {
     console.log(displayValue);
   }
   
-
   function evaluatePecentage(): void {
     console.log((parseFloat(displayValue) / 100).toString());
     setDisplayValue(prev => (Math.abs(parseFloat(prev) / 100)).toString());
@@ -191,10 +222,10 @@ function App() {
 
   function parseInput(input: string): Array<string> {
     const tokens: Array<string> = [];
-  
+    
     let currentToken = '';
-    for (let i = 0; i < input.length; i++) {
-      const char = input[i];
+    for (const element of input) {
+      const char = element;
   
       // check for digit or decimal point
       if (/[\d.]/.test(char)) {
@@ -243,8 +274,6 @@ function App() {
     return tokens;
   }
   
-  
-
   return (
     <div style={{backgroundColor:"orange"}}>
       <NavMenu />

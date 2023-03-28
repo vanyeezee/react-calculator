@@ -5,51 +5,48 @@
 export const onCreateCalculationHistory = /* GraphQL */ `
   subscription OnCreateCalculationHistory(
     $filter: ModelSubscriptionCalculationHistoryFilterInput
+    $owner: String
   ) {
-    onCreateCalculationHistory(filter: $filter) {
+    onCreateCalculationHistory(filter: $filter, owner: $owner) {
       id
       userId
       expression
       result
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
+      owner
     }
   }
 `;
 export const onUpdateCalculationHistory = /* GraphQL */ `
   subscription OnUpdateCalculationHistory(
     $filter: ModelSubscriptionCalculationHistoryFilterInput
+    $owner: String
   ) {
-    onUpdateCalculationHistory(filter: $filter) {
+    onUpdateCalculationHistory(filter: $filter, owner: $owner) {
       id
       userId
       expression
       result
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
+      owner
     }
   }
 `;
 export const onDeleteCalculationHistory = /* GraphQL */ `
   subscription OnDeleteCalculationHistory(
     $filter: ModelSubscriptionCalculationHistoryFilterInput
+    $owner: String
   ) {
-    onDeleteCalculationHistory(filter: $filter) {
+    onDeleteCalculationHistory(filter: $filter, owner: $owner) {
       id
       userId
       expression
       result
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
+      owner
     }
   }
 `;

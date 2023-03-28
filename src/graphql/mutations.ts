@@ -14,9 +14,7 @@ export const createCalculationHistory = /* GraphQL */ `
       result
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
+      owner
     }
   }
 `;
@@ -32,9 +30,7 @@ export const updateCalculationHistory = /* GraphQL */ `
       result
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
+      owner
     }
   }
 `;
@@ -50,9 +46,7 @@ export const deleteCalculationHistory = /* GraphQL */ `
       result
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
+      owner
     }
   }
 `;

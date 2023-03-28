@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../styles.css";
-import { Container, Nav, Navbar } from 'react-bootstrap';
-import { Authenticator } from '@aws-amplify/ui-react';
+import { Container, Nav, Navbar } from "react-bootstrap";
+import { Authenticator } from "@aws-amplify/ui-react";
 
 const NavMenu = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -9,8 +9,8 @@ const NavMenu = () => {
   const checkAuthAndRenderMenuItems = () => {
     if (!isAuthenticated) {
       return anonymousView();
-    } 
-  }
+    }
+  };
 
   const anonymousView = () => {
     return (
@@ -19,11 +19,13 @@ const NavMenu = () => {
           <Nav.Link>Home</Nav.Link>
         </Nav>
         <Nav>
-          <Nav.Link onClick={() => setIsAuthenticated(true)}>Login or Sign Up</Nav.Link>
+          <Nav.Link onClick={() => setIsAuthenticated(true)}>
+            Login or Sign Up
+          </Nav.Link>
         </Nav>
       </>
     );
-  }
+  };
 
   return (
     <header>
@@ -41,16 +43,22 @@ const NavMenu = () => {
           {({ signOut, user }) => (
             <main>
               <h1>Hello {user?.username}</h1>
-                          <button onClick={() => {
-                              setIsAuthenticated(false);
-                              return signOut;
-                          }}>Sign out</button>
+              <button
+                onClick={() => {
+                  if (signOut) {
+                    signOut();
+                  }
+                  setIsAuthenticated(false);
+                }}
+              >
+                Sign out
+              </button>
             </main>
           )}
         </Authenticator>
       )}
     </header>
   );
-}
+};
 
 export default NavMenu;

@@ -1,6 +1,6 @@
 projects:
   reactcalculator:
-    schemaPath: amplify/backend/api/reactcalculator/build/schema.graphql
+    schemaPath: src/graphql/schema.json
     includes:
       - src/graphql/**/*.ts
     excludes:

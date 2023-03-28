@@ -8,7 +8,6 @@ export type CreateCalculationHistoryInput = {
   expression: string,
   result: string,
   createdAt?: string | null,
-  _version?: number | null,
 };
 
 export type ModelCalculationHistoryConditionInput = {
@@ -85,9 +84,7 @@ export type CalculationHistory = {
   result: string,
   createdAt: string,
   updatedAt: string,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
+  owner?: string | null,
 };
 
 export type UpdateCalculationHistoryInput = {
@@ -96,12 +93,10 @@ export type UpdateCalculationHistoryInput = {
   expression?: string | null,
   result?: string | null,
   createdAt?: string | null,
-  _version?: number | null,
 };
 
 export type DeleteCalculationHistoryInput = {
   id: string,
-  _version?: number | null,
 };
 
 export type ModelCalculationHistoryFilterInput = {
@@ -119,7 +114,6 @@ export type ModelCalculationHistoryConnection = {
   __typename: "ModelCalculationHistoryConnection",
   items:  Array<CalculationHistory | null >,
   nextToken?: string | null,
-  startedAt?: number | null,
 };
 
 export type ModelSubscriptionCalculationHistoryFilterInput = {
@@ -176,9 +170,7 @@ export type CreateCalculationHistoryMutation = {
     result: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -196,9 +188,7 @@ export type UpdateCalculationHistoryMutation = {
     result: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -216,9 +206,7 @@ export type DeleteCalculationHistoryMutation = {
     result: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -235,9 +223,7 @@ export type GetCalculationHistoryQuery = {
     result: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -258,44 +244,15 @@ export type ListCalculationHistoriesQuery = {
       result: string,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type SyncCalculationHistoriesQueryVariables = {
-  filter?: ModelCalculationHistoryFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncCalculationHistoriesQuery = {
-  syncCalculationHistories?:  {
-    __typename: "ModelCalculationHistoryConnection",
-    items:  Array< {
-      __typename: "CalculationHistory",
-      id: string,
-      userId: string,
-      expression: string,
-      result: string,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
   } | null,
 };
 
 export type OnCreateCalculationHistorySubscriptionVariables = {
   filter?: ModelSubscriptionCalculationHistoryFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreateCalculationHistorySubscription = {
@@ -307,14 +264,13 @@ export type OnCreateCalculationHistorySubscription = {
     result: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateCalculationHistorySubscriptionVariables = {
   filter?: ModelSubscriptionCalculationHistoryFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdateCalculationHistorySubscription = {
@@ -326,14 +282,13 @@ export type OnUpdateCalculationHistorySubscription = {
     result: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteCalculationHistorySubscriptionVariables = {
   filter?: ModelSubscriptionCalculationHistoryFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeleteCalculationHistorySubscription = {
@@ -345,8 +300,6 @@ export type OnDeleteCalculationHistorySubscription = {
     result: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };

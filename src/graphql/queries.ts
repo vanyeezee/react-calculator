@@ -11,9 +11,7 @@ export const getCalculationHistory = /* GraphQL */ `
       result
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
+      owner
     }
   }
 `;
@@ -35,41 +33,9 @@ export const listCalculationHistories = /* GraphQL */ `
         result
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
+        owner
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncCalculationHistories = /* GraphQL */ `
-  query SyncCalculationHistories(
-    $filter: ModelCalculationHistoryFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncCalculationHistories(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        userId
-        expression
-        result
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
     }
   }
 `;
