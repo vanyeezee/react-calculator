@@ -2,7 +2,6 @@ import React from 'react';
 
 interface HistoryProps {
   expression: string[] | null,
-  cloudCalculationHistory: string[] | null;
 }
   
 function idGenerator(index: number): number {
@@ -10,7 +9,7 @@ function idGenerator(index: number): number {
     return index ** 2;
   }
   
-const History: React.FC<HistoryProps> = ({ expression: history, cloudCalculationHistory: cloudHistory }) => {
+const History: React.FC<HistoryProps> = ({ expression: history }) => {
     return (
       <div>
         <h2>History</h2>

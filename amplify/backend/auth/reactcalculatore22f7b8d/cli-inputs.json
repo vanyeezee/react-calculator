@@ -64,7 +64,7 @@
       "accounts.google.com",
       "www.amazon.com"
     ],
-    "userPoolGroups": true,
+    "userPoolGroups": false,
     "adminQueries": false,
     "hostedUI": true,
     "hostedUIDomainName": "reactcalculatore3cbf3eb-e3cbf3eb",
@@ -77,6 +77,6 @@
       "Ref": "AWS::StackId"
     },
     "permissions": [],
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost/\"]}"
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://master.d24sr9e1xdl2rt.amplifyapp.com/\",\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost/\",\"https://master.d24sr9e1xdl2rt.amplifyapp.com/\"]}"
   }
 }

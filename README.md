@@ -1,46 +1,93 @@
-# Getting Started with Create React App
+# react-calculator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a TypeScript-based calculator app built with React and AWS Amplify. The app uses a GraphQL API and a Cognito userpool for authentication.
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+To install the app, follow these steps:
 
-### `npm start`
+1. Clone the repository: `git clone https://github.com/me/reactcalculator.git` or
+Run `npx create-react-app react-calculator --template typescript` to create a new React app with TypeScript support.
+Build out the app's components.
+2. Navigate to the app directory: `cd react-calculator`
+3. Install dependencies: `npm install`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Usage
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+To run the app locally, use the following command:
 
-### `npm test`
+`npm start`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To build the app, use the following command:
 
-### `npm run build`
+`npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## AWS Amplify Integration
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+To set up AWS Amplify integration, follow these steps:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Run `amplify setup` to configure the AWS Amplify CLI on your local machine.
+2. Run `amplify init` to create a new Amplify project for your app.
+3. Run `amplify add auth` to add a Cognito userpool for authentication.
+4. Run `amplify add api` to add a GraphQL API and use the Cognito userpool as the authentication mode.
+5. Update the GraphQL API schema with rules to only allow users access to their own history.
+6. Run `amplify push` to deploy the backend configuration to the cloud.
+7. Configure the [Authenticator](@aws-amplify/ui-react) component to only trigger on certain actions.
+8. Configure the API to sync local and cloud data. If you encounter this [known issue](https://github.com/aws-amplify/amplify-js/issues/4257), you can resolve it by following [these steps](https://github.com/aws-amplify/amplify-js/issues/4257#issuecomment-622288820)
 
-### `npm run eject`
+## Testing
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Write tests using [Jest for TypeScript](@types/jest).
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To run tests, use the following command:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+`npm test`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Dockerfile
 
-## Learn More
+To build a Docker image of the app, create a file named "Dockerfile" in the root directory with the following contents:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+FROM node:16-alpine
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+WORKDIR /app
+
+COPY . .
+
+RUN npm install --production
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
+```
+
+Then, run the following command to build the Docker image:
+
+`docker build -t react-calculator .`
+
+And to run it:
+
+`docker run -p 80:3000 react-calculator`
+
+## Contributing
+
+To contribute to this project, please follow these steps:
+
+1. Fork this repository to your own GitHub account.
+2. Clone the forked repository to your local machine.
+Create a new branch for your changes.
+Make your changes and commit them with a descriptive commit message.
+Push your changes to your forked repository.
+Submit a pull request from your forked repository to this repository.
+Wait for your pull request to be reviewed and merged.
+
+Please make sure to adhere to the following guidelines:
+
+Follow the existing code style and conventions.
+Write tests for new features and ensure that existing tests pass.
+Use clear and descriptive commit messages.
+Ensure that your code is well-documented.
+
+## Contact
+
+To contact the project maintainer, please visit their website [here](https://adok0001.github.io/#contact).

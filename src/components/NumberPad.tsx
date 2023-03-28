@@ -5,13 +5,14 @@ import OperatorButton from "./OperatorButton";
 import { AllClearButton, ClearButton } from "./ClearButton";
 
 interface NumberPadProps {
-  handleNumberClick: (number: string) => void;
-  handleDecimalClick: () => void;
-    onOperatorClick: (operator: string) => void;
-  onEqualClick: () => void;
-  onNumPadClick(numPadButton: string): void;
-  handleAllClearClick: () => void;
-  handleClearClick: () => void;
+  // Props passed down from parent component
+  handleNumberClick: (number: string) => void; // function to handle number button click
+  handleDecimalClick: () => void; // function to handle decimal button click
+  onOperatorClick: (operator: string) => void; // function to handle operator button click
+  onEqualClick: () => void; // function to handle equal button click
+  onNumPadClick(numPadButton: string): void; // function to handle number pad button click
+  handleAllClearClick: () => void; // function to handle all clear button click
+  handleClearClick: () => void; // function to handle clear button click
 };
 
 const NumberPad: React.FC<NumberPadProps> = ({

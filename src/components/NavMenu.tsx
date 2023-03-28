@@ -4,14 +4,18 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import { Authenticator } from "@aws-amplify/ui-react";
 
 const NavMenu = () => {
+  // Define state variable for authentication status
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  // Define function to render menu items based on authentication status
   const checkAuthAndRenderMenuItems = () => {
+    // If not authenticated, return anonymous view
     if (!isAuthenticated) {
       return anonymousView();
     }
   };
 
+  // Define function to render view for guest(unauthenticated) users
   const anonymousView = () => {
     return (
       <>
@@ -27,6 +31,7 @@ const NavMenu = () => {
     );
   };
 
+  // Return the JSX for the navigation menu
   return (
     <header>
       <Navbar bg="light" expand="lg">
@@ -38,6 +43,7 @@ const NavMenu = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      {/* Render the Authenticator component if authenticated */}
       {isAuthenticated && (
         <Authenticator>
           {({ signOut, user }) => (
