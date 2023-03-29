@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "reactcalculator",
+    "serviceName": "AppSync",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authreactcalculator0a5745cc"
+    },
+    "conflictResolution": {},
+    "additionalAuthTypes": []
+  }
+}
