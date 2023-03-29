@@ -1,26 +1,23 @@
-# Use the official Node.js image as the base image
-FROM node:16
+# Base image
+FROM node:16-alpine
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
-COPY package.json package-lock.json ./
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
 # Install dependencies
-RUN npm ci
+RUN npm install --production
 
-# Copy the rest of the application code to the working directory
+# Copy app files
 COPY . .
 
-# Build the React application
+# Build the app
 RUN npm run build
 
-# Install the serve package globally
-RUN npm install -g serve
+# Expose the port
+EXPOSE 3000
 
-# Expose the port the server will run on
-EXPOSE 3500
-
-# Start the server
-CMD ["serve", "-s", "build", "-l", "3500"]
+# Start the app
+CMD ["npm", "start"]
