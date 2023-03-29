@@ -64,11 +64,15 @@ CMD ["npm", "start"]
 
 Then, run the following command to build the Docker image:
 
-`docker build -t react-calculator .`
+```powershell
+$version=1.0.0
+docker build -t react-calculator:$version .
+```
 
-And to run it:
+And to run and bind to port 3000:
 
-`docker run -p 80:3000 react-calculator`
+`docker run -p 3000:3000 react-calculator`
+ And  access it on http://your-network:80
 
 ## Contributing
 
