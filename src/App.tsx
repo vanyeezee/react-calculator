@@ -15,7 +15,6 @@ import { CalculationHistory, ListCalculationHistoriesQuery } from "./API";
 import { CalculatorEngine } from "./components/CalculatorEngine";
 
 function App() {
-  const history = useRef<string[]>([]); // an array of strings to store calculation history
   const [renderHistoryModal, setRenderHistoryModal] = useState<boolean>(false); // boolean to control whether to display the history modal
 
   // Use CalculatorEngine component
@@ -24,15 +23,74 @@ function App() {
     setDisplayValue,
     memory,
     setMemory,
+    history,
     handleNumPadClick,
     handleEqualClick,
-    handleAllClearClick,
-    handleClearClick,
-    handleHistoryButton,
-    handleDisplayInput,
-    evaluatePecentage,
   } = CalculatorEngine();
 
+    // Function to handle the AC button click
+    const handleAllClearClick = () => {
+      setDisplayValue("0");
+    };
+  
+    // Function to handle the C button click
+    const handleClearClick = () => {
+      if (displayValue === "0") {
+        return;
+      }
+    
+      if (displayValue.length === 1) {
+        setDisplayValue("0");
+      } else {
+        setDisplayValue((prev) => prev.slice(0, -1));
+      }
+    };
+
+   //function logs the current display value to the console.
+   function handleDisplayInput(): void {
+    console.log(displayValue); // Log the current display value
+  }
+
+  //function calculates the percentage of the current display value and updates the display value with the result.
+  function evaluatePecentage(): void {
+    setDisplayValue((prev) => Math.abs(parseFloat(prev) / 100).toString()); // Set the display value to the percentage of the current display value
+  }
+
+  //Function updates the history and toggles the display of the history modal when the history button is clicked.
+  function handleHistoryButton(): void {
+    if (renderHistoryModal) {
+      updateHistory(); // Fetch and update the history if the modal is bein closed
+    }
+    setRenderHistoryModal(!renderHistoryModal); // Toggle the modal display
+  }
+
+    /** Function fetches the calculation history from a cloud API using GraphQL and updates
+   * the history.current array by concatenating the cloud history with the local history array.
+   * If there's an error, it logs the error to the console. */
+    async function updateHistory() {
+      try {
+        // Check if the user is authenticated
+        const user = await Auth.currentUserInfo();
+        const userId = user.attributes.sub; // Get the user's unique ID
+  
+        // Query the backend to fetch the calculation history for the current user
+        const cloudHistoryData: any =
+          await API.graphql<ListCalculationHistoriesQuery>(
+            graphqlOperation(listCalculationHistories, {
+              filter: { userId: { eq: userId } },
+            })
+          );
+        const cloudHistory =
+          cloudHistoryData.data?.listCalculationHistories.items;
+  
+        // Add the fetched history to the current history array
+        history.current = history.current.concat(
+          cloudHistory.map((item: CalculationHistory) => item.expression)
+        );
+      } catch (e) {
+        console.log("Error: ", e);
+      }
+    }
 
 
   // Function to handle number pad button clicks
